@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/brendangooden/lovable-reverse-engineer-spec/schemas/spec-frontmatter.schema.json",
+  "title": "Spec Document Frontmatter",
+  "description": "Optional YAML frontmatter for files in <out>/spec/. Enables machine-readable coverage checks.",
+  "type": "object",
+  "required": ["doc", "version"],
+  "properties": {
+    "doc": {
+      "enum": [
+        "00-overview",
+        "01-domain-model",
+        "02-features",
+        "03-user-flows",
+        "04-ui-design",
+        "05-data-model",
+        "06-integrations",
+        "07-business-logic",
+        "08-non-functional",
+        "09-decisions",
+        "10-evolution"
+      ]
+    },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "source_repo": { "type": "string" },
+    "source_chat": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "confidence": { "enum": ["high", "medium", "low"] },
+    "evidence_count": {
+      "type": "object",
+      "properties": {
+        "chat_citations": { "type": "integer", "minimum": 0 },
+        "code_citations": { "type": "integer", "minimum": 0 },
+        "nfr_citations": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "tbd_items": { "type": "array", "items": { "type": "string" } }
+  }
+}

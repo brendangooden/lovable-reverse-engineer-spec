@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/brendangooden/lovable-reverse-engineer-spec/schemas/chat-message.schema.json",
+  "title": "Lovable Chat Message",
+  "description": "Shape of a single file under <chat>/raw/ produced by loveable-chat-history-capture. Mirrors TrajectoryMessage in src/messages.ts of that repo.",
+  "type": "object",
+  "required": ["id", "fields"],
+  "properties": {
+    "id": { "type": "string", "description": "Message id (e.g. umsg_01xxx or aimsg_01xxx)" },
+    "name": { "type": "string", "description": "Firestore resource path" },
+    "createTime": { "type": "string", "format": "date-time" },
+    "updateTime": { "type": "string", "format": "date-time" },
+    "fields": {
+      "type": "object",
+      "required": ["role"],
+      "properties": {
+        "role": { "enum": ["user", "ai"] },
+        "content": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file_id": { "type": "string" },
+              "file_name": { "type": "string" },
+              "dir_name": { "type": "string" },
+              "local_path": { "type": "string" }
+            }
+          }
+        },
+        "edit_id": { "type": "string", "description": "Links to <chat>/edits/<edit_id>.json" },
+        "cost_credits": { "type": "number" },
+        "current_page": { "type": "string", "description": "Route the user was on when sending" },
+        "graph_id": { "type": "string" },
+        "tool_diffs": {
+          "type": "object",
+          "description": "Map of tool_id -> array of tool-use events (AI only)",
+          "additionalProperties": { "type": "array" }
+        }
+      }
+    }
+  }
+}
