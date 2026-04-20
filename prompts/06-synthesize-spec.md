@@ -1,6 +1,6 @@
 # Prompt 06 — Synthesize `/spec/`
 
-**Inputs:** `.scratch/repo-inventory.json`, `.scratch/chat-insights.json`, `.scratch/data-model.json`, `.scratch/business-logic.json`, `.scratch/ui-inventory.json`, `.scratch/nfrs.json`
+**Inputs:** `.scratch/repo-inventory.json`, `.scratch/chat-insights.json`, `.scratch/data-model.json`, `.scratch/business-logic.json`, `.scratch/ui-inventory.json`, `.scratch/nfrs.json`, `.scratch/poc-review.json`
 **Output:** `<out>/spec/*.md`
 
 ## Hard rules
@@ -69,15 +69,45 @@ From `nfrs.json`. Sections: Audience & Scale, Performance, Availability, Securit
 From `chat-insights.decisions` + `chat-insights.business_rules`. ADR format:
 ```
 ## ADR-NN — <title>
-**Status:** accepted|superseded-by-ADR-MM
+**Status:** accepted | superseded-by-ADR-MM | POC-shortcut → production-recommend-<RI-NN>
 **Context:** …
 **Decision:** …
 **Consequences:** …
 **Evidence:** (chat: …)
 ```
+When an ADR corresponds to a POC shortcut the user flagged in `poc-review.json.review_items`, set status to `POC-shortcut → production-recommend-RI-NN` and link to the review item in `11-production-adjustments.md`.
 
 ### `10-evolution.md`
 Chronological narrative of pivots + abandoned attempts from `chat-insights.pivots` + `chat-insights.abandoned`. Each entry cites message ids.
+
+### `11-production-adjustments.md`
+From `poc-review.json`. Two sections:
+
+**1. Trade-off decisions** — for each `tradeoffs[]` entry where the user chose `adjust` or `out-of-scope-v1`:
+```
+## TO-NN — <area> (<decision>)
+**POC state:** <current_state>
+**Target state:** <target_state>
+**Rationale:** <rationale>
+**Related requirements:** R-NN, R-NFR-NN
+**Notes:** <notes>
+```
+
+**2. Review items** — for each `review_items[]` entry:
+```
+## RI-NN — <title>
+**Category:** security | privacy | reliability | performance | maintainability | ux
+**Severity:** high | medium | low
+**POC state:** <summary of current behaviour>
+**Evidence:** (code: …) (chat: …)
+**Decision:** copy-as-is | adjust | out-of-scope-v1 | needs-discussion
+**Adjustment:** <one-line prescription>
+**User notes:** <notes>
+```
+
+Order: `adjust` first (highest severity), then `needs-discussion`, then `out-of-scope-v1`, then `copy-as-is`. Skip `copy-as-is` items that have low severity to keep the doc actionable.
+
+Items marked `needs-discussion` also flow into `08-non-functional.md` or the action items list in `REVERSE-ENGINEER-REPORT.md`.
 
 ### `implementation-hints/` (optional, only when useful)
 - `frontend.md` — Lovable used React + shadcn + Tailwind with these tokens. A rebuilder on Flutter should …

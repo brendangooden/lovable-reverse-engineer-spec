@@ -41,11 +41,13 @@ Reading the raw chat transcript doesn't scale. The repo alone misses the intent,
 │   ├── 08-non-functional.md       ← populated via interactive Q&A
 │   ├── 09-decisions.md            ← ADRs mined from chat
 │   ├── 10-evolution.md            ← pivots + abandoned attempts
+│   ├── 11-production-adjustments  ← POC shortcuts flagged for rework
 │   └── implementation-hints/      ← Lovable-specific notes (optional)
 ├── .planning/                     GSD-ready
 │   ├── PROJECT.md
 │   ├── REQUIREMENTS.md
 │   ├── ROADMAP.md
+│   ├── BACKLOG.md                 ← items deferred past v1
 │   └── phases/NN-slug/PLAN.md     only when project warrants breakdown
 └── REVERSE-ENGINEER-REPORT.md     coverage matrix, confidence, TBDs
 ```
@@ -80,8 +82,9 @@ Copy this repo's `.github/copilot-instructions.md` + `AGENTS.md` + `prompts/` in
 2. Export chat history with [`loveable-chat-history-capture`](https://github.com/brendangooden/loveable-chat-history-capture) (`bun run export`).
 3. Ask your agent to run this skill with the two local paths.
 4. Answer the NFR elicitation questions (audience size, compliance, SLA, etc.).
-5. Review `REVERSE-ENGINEER-REPORT.md` for coverage and gaps.
-6. Feed `.planning/ROADMAP.md` into GSD (`/gsd-new-project --from-roadmap`) or hand `/spec/` to any agent to rebuild.
+5. Answer the POC-vs-production review (which shortcuts to carry forward vs adjust vs drop — the skill also auto-surfaces concerning patterns it found).
+6. Review `REVERSE-ENGINEER-REPORT.md` for coverage and gaps.
+7. Feed `.planning/ROADMAP.md` into GSD (`/gsd-new-project --from-roadmap`) or hand `/spec/` to any agent to rebuild.
 
 ## Design principles
 
@@ -89,6 +92,7 @@ Copy this repo's `.github/copilot-instructions.md` + `AGENTS.md` + `prompts/` in
 - **Stack-free spec** — `/spec/` never names React, Supabase, shadcn. Those move to `implementation-hints/`.
 - **Chat as primary intent source** — code shows what was built; chat shows what was meant. Conflicts are surfaced, not papered over.
 - **Preserve failed attempts** — abandoned paths are ADR context, not noise.
+- **POC ≠ production** — a Lovable prototype is ground truth for *what was built*, not *what should ship*. The skill asks up-front what to keep vs adjust vs drop and auto-surfaces concerning patterns (CORS wildcards, PII in logs, missing FKs, etc.) for per-item decisions.
 - **Never modify inputs** — the repo and chat export are read-only.
 
 ## What qualifies as a "Lovable project"?

@@ -30,6 +30,7 @@ spec/                               # agent-agnostic, stack-free
   08-non-functional.md
   09-decisions.md
   10-evolution.md
+  11-production-adjustments.md      # POC shortcuts flagged for rework
   implementation-hints/             # optional Lovable-specific notes
 .planning/                          # GSD-compatible
   PROJECT.md
@@ -54,11 +55,13 @@ Execute these steps in order. Each `prompts/NN-*.md` file is a self-contained in
 
 3. **NFR elicitation** — run `prompts/08-elicit-nfrs.md`. Ask the user for audience size, concurrency, data sensitivity, compliance regime (GDPR/HIPAA/SOC2/none), SLA targets, perf budgets, hosting constraints, budget ceiling. Record to `.scratch/nfrs.json`. Use AskUserQuestion in Claude Code; in AGENTS.md hosts use inline Q&A.
 
-4. **Sizing** — compute complexity score = `routes + tables + edge_fns + distinct_feature_areas`. If ≤ 12 emit a single-milestone roadmap with one phase per feature area; if > 12 break into milestones aligned with feature boundaries (auth, data capture, reporting, admin, etc.).
+4. **POC-vs-production review** — run `prompts/10-poc-review.md`. Ask the user which POC shortcuts to carry forward and which to adjust for production (auth, validation, logging, observability, rate limits, multi-tenancy, testing, etc.). Auto-surface concerning patterns from extraction outputs (CORS wildcards, PII in logs, missing FKs, god components, etc.) and request per-item decisions. Record to `.scratch/poc-review.json`. **Critical:** a Lovable POC is ground truth for *what was built*, not necessarily *what should ship*.
 
-5. **Synthesize** — run `prompts/06-synthesize-spec.md` then `prompts/07-synthesize-gsd.md`. Every claim must cite evidence: `(chat: <message_id>)` or `(code: <path>:<line>)`. No unsourced statements.
+5. **Sizing** — compute complexity score = `routes + tables + edge_fns + distinct_feature_areas`. If ≤ 12 emit a single-milestone roadmap with one phase per feature area; if > 12 break into milestones aligned with feature boundaries (auth, data capture, reporting, admin, etc.).
 
-6. **Verify** — run `prompts/09-verify-coverage.md`. Produce `REVERSE-ENGINEER-REPORT.md` with a coverage matrix that proves every route, every DB table, every edge function, and every documented Lovable plan appears in at least one spec document. Flag low-confidence sections and every TBD.
+6. **Synthesize** — run `prompts/06-synthesize-spec.md` then `prompts/07-synthesize-gsd.md`. Every claim must cite evidence: `(chat: <message_id>)` or `(code: <path>:<line>)`. No unsourced statements. Production adjustments land in `spec/11-production-adjustments.md` and tagged ADRs in `09-decisions.md`.
+
+7. **Verify** — run `prompts/09-verify-coverage.md`. Produce `REVERSE-ENGINEER-REPORT.md` with a coverage matrix that proves every route, every DB table, every edge function, and every documented Lovable plan appears in at least one spec document. Flag low-confidence sections and every TBD.
 
 ## Hard rules
 

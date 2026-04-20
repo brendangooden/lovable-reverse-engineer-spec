@@ -23,6 +23,8 @@ For each of these inventory items, confirm it appears in at least one spec doc:
 | Shipped intent | `chat-insights.intents[outcome=shipped]` | `spec/02-features.md` |
 | `.lovable/plan.md` history | `repo-inventory.lovable_artifacts.plan_md_history` | `spec/09-decisions.md` or `10-evolution.md` |
 | Requirement | `.planning/REQUIREMENTS.md R-NN` | exactly one phase in `.planning/ROADMAP.md` |
+| POC review item | `poc-review.json.review_items[]` | `spec/11-production-adjustments.md` + (if `adjust`) a tagged task in `.planning/phases/*/PLAN.md` or `.planning/BACKLOG.md` |
+| POC tradeoff | `poc-review.json.tradeoffs[]` | `spec/11-production-adjustments.md` + (if `adjust`) shaped into `spec/02-features.md` acceptance criteria or `spec/08-non-functional.md` |
 
 ### 2. Evidence check
 Grep each `spec/*.md` for unsourced claims:
@@ -47,6 +49,13 @@ Check `nfrs.json` for `skipped_questions[]`. Each skipped item should appear in 
 - Claims in chat without code backing → list as "aspirational/unbuilt".
 - Code without chat rationale → list as "undocumented decisions".
 
+### 7. POC-review completeness
+- Every `review_items[]` in `poc-review.json` appears in `spec/11-production-adjustments.md`.
+- Every `review_items[]` with `decision: adjust` is either a tagged task in `.planning/phases/*/PLAN.md` OR in a "Production Hardening" phase OR (if deferred) in `.planning/BACKLOG.md`.
+- Every `decision: out-of-scope-v1` item is in `.planning/BACKLOG.md`.
+- Every `decision: needs-discussion` item appears in the report's action items list.
+- ADRs in `spec/09-decisions.md` corresponding to flagged POC shortcuts have `Status: POC-shortcut → production-recommend-RI-NN`.
+
 ## Output format
 
 ```markdown
@@ -69,6 +78,8 @@ Check `nfrs.json` for `skipped_questions[]`. Each skipped item should appear in 
 | Chat ADRs | 12 | 11 | adr-009 |
 | Shipped intents | 47 | 46 | intent-038 |
 | Requirements → Phases | 23 | 23 | — |
+| POC review items | 14 | 14 | — |
+| POC tradeoffs | 9 | 9 | — |
 
 **Coverage: 97.8%**
 
@@ -109,6 +120,7 @@ Check `nfrs.json` for `skipped_questions[]`. Each skipped item should appear in 
 | 08-non-functional | Medium | 1 TBD |
 | 09-decisions | High | — |
 | 10-evolution | Medium | Some pivots lack final outcome |
+| 11-production-adjustments | High | — |
 
 ## Action items
 1. Fill `[TBD: retention]` in spec/08-non-functional.md.

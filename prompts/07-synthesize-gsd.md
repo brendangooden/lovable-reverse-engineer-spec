@@ -1,7 +1,7 @@
 # Prompt 07 — Synthesize `.planning/` (GSD-native)
 
-**Inputs:** everything under `.scratch/` + the `/spec/*.md` files just written
-**Output:** `<out>/.planning/{PROJECT.md, REQUIREMENTS.md, ROADMAP.md, phases/NN-slug/PLAN.md}`
+**Inputs:** everything under `.scratch/` (including `poc-review.json`) + the `/spec/*.md` files just written
+**Output:** `<out>/.planning/{PROJECT.md, REQUIREMENTS.md, ROADMAP.md, BACKLOG.md, phases/NN-slug/PLAN.md}`
 
 ## Sizing
 
@@ -70,6 +70,23 @@ Rules:
 - Every requirement from `REQUIREMENTS.md` appears under exactly one phase's "Covers requirements".
 - Phase ordering respects data-model dependencies (can't build reporting before sessions exist).
 - Each phase has a single observable goal, not a list of tasks.
+
+### Production hardening (from `poc-review.json`)
+- For each `review_items[]` entry with `decision: adjust`: either inline as a task in the phase covering that feature area (tagged `[production-hardening: RI-NN]`), or bundle into a dedicated final "Production Hardening" phase if the item is cross-cutting (CORS policy, rate limiting, observability baseline, audit log retention).
+- For each `tradeoffs[]` entry with `decision: adjust`: bake the target state into Phase 01 (foundational, e.g. SSO auth) or into the earliest phase that depends on it. Tag `[production-hardening: TO-NN]`.
+- Never silently downgrade an `adjust` decision to `copy-as-is` just to keep scope small — if a hardening task is too big, keep it tagged and add a note; don't drop it.
+
+## `BACKLOG.md`
+
+Every `poc-review.json` review item or tradeoff with `decision: out-of-scope-v1` lands here with rationale. Format:
+```
+## B-NN — <title>
+**Source:** poc-review.json#RI-NN (or TO-NN)
+**Why deferred:** <rationale>
+**Revisit when:** <trigger — e.g. "user base >10k", "client-facing launch", "SOC2 audit">
+```
+
+Also append `needs-discussion` items here tagged `[needs-discussion]` so they surface for a future decision.
 
 ## `phases/NN-slug/PLAN.md` (only when breakdown warranted)
 

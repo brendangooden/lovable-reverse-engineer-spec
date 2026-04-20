@@ -29,6 +29,7 @@ spec/
   08-non-functional.md
   09-decisions.md
   10-evolution.md
+  11-production-adjustments.md
   implementation-hints/
 .planning/
   PROJECT.md
@@ -44,10 +45,11 @@ Load and follow `prompts/NN-*.md` in order:
 
 1. **Preflight** (`prompts/01-survey-repo.md` preflight) — detect Lovable fingerprints: `lovable-tagger` dep, `componentTagger()` in vite config, `.lovable/` dir, auto-gen header in `src/integrations/supabase/client.ts`. Stop if none match.
 2. **Parallel extraction** — run `01-survey-repo.md`, `02-mine-chat.md`, `03-extract-data-model.md`, `04-extract-business-logic.md`, `05-extract-ui.md`. Each writes `.scratch/*.json`.
-3. **NFR elicitation** — `prompts/08-elicit-nfrs.md`. Ask user about audience size, concurrency, data sensitivity, compliance, SLAs, perf, hosting, budget.
-4. **Sizing** — complexity = `routes + tables + edge_fns + feature_areas`. ≤12 → single milestone; >12 → multiple.
-5. **Synthesize** — `prompts/06-synthesize-spec.md` then `prompts/07-synthesize-gsd.md`. Every claim cites `(chat: <id>)` or `(code: <path>:<line>)`.
-6. **Verify** — `prompts/09-verify-coverage.md` → `REVERSE-ENGINEER-REPORT.md`.
+3. **NFR elicitation** — `prompts/08-elicit-nfrs.md`. Audience, concurrency, data sensitivity, compliance, SLAs, perf, hosting, budget.
+4. **POC-vs-production review** — `prompts/10-poc-review.md`. Ask which POC shortcuts to keep vs adjust vs drop; auto-surface concerning patterns from extractions for per-item decisions.
+5. **Sizing** — complexity = `routes + tables + edge_fns + feature_areas`. ≤12 → single milestone; >12 → multiple.
+6. **Synthesize** — `prompts/06-synthesize-spec.md` then `prompts/07-synthesize-gsd.md`. Every claim cites `(chat: <id>)` or `(code: <path>:<line>)`.
+7. **Verify** — `prompts/09-verify-coverage.md` → `REVERSE-ENGINEER-REPORT.md`.
 
 ## Hard rules
 

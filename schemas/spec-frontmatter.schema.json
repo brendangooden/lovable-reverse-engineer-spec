@@ -18,7 +18,8 @@
         "07-business-logic",
         "08-non-functional",
         "09-decisions",
-        "10-evolution"
+        "10-evolution",
+        "11-production-adjustments"
       ]
     },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
