@@ -12,6 +12,9 @@ Thumbs.db
 .idea/
 *.swp
 
+# local Claude Code per-session state
+.claude/settings.local.json
+
 # os
 ehthumbs.db
 desktop.ini
