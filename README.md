@@ -23,6 +23,7 @@ Reading the raw chat transcript doesn't scale. The repo alone misses the intent,
 |---|---|---|
 | `--repo <path>` | ✅ | Local clone of the Lovable GitHub repo |
 | `--chat <path>` | ✅ | Export from [`loveable-chat-history-capture`](https://github.com/brendangooden/loveable-chat-history-capture) |
+| `--teams-chat <path>` | optional | Teams/Slack/email transcript (e.g. `CHAT.md`) where stakeholders discussed scope, strategy, external context. Pulls in signal that's absent from Lovable chat and the repo. |
 | `--out <path>` | optional | Output dir (default: `<repo>/.reverse-engineered/`) |
 
 ## Outputs
@@ -93,6 +94,7 @@ Copy this repo's `.github/copilot-instructions.md` + `AGENTS.md` + `prompts/` in
 - **Chat as primary intent source** — code shows what was built; chat shows what was meant. Conflicts are surfaced, not papered over.
 - **Preserve failed attempts** — abandoned paths are ADR context, not noise.
 - **POC ≠ production** — a Lovable prototype is ground truth for *what was built*, not *what should ship*. The skill asks up-front what to keep vs adjust vs drop and auto-surfaces concerning patterns (CORS wildcards, PII in logs, missing FKs, etc.) for per-item decisions.
+- **Three signal sources** — (1) the repo shows what was *built*, (2) Lovable chat shows what was *meant at dev level*, (3) Teams/Slack chat (optional) shows what was *meant at stakeholder level*. Merging all three catches the gaps a two-source review would miss.
 - **Never modify inputs** — the repo and chat export are read-only.
 
 ## What qualifies as a "Lovable project"?

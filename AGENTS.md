@@ -10,6 +10,7 @@ Turn a Lovable.dev project (GitHub repo + exported chat history) into a structur
 
 - `--repo <path>` — clone of the Lovable GitHub repo.
 - `--chat <path>` — export from [`loveable-chat-history-capture`](https://github.com/brendangooden/loveable-chat-history-capture) (contains `raw/*.json`, `edits/*.json`, `attachments/`, `timeline.md`, `index.json`).
+- `--teams-chat <path>` *(optional)* — Teams/Slack/email transcript (CHAT.md) for stakeholder-level context.
 - `--out <path>` — where to write the spec (defaults to `<repo>/.reverse-engineered/`).
 
 If args are missing, ask the user. Never guess.
@@ -44,7 +45,7 @@ REVERSE-ENGINEER-REPORT.md
 Load and follow `prompts/NN-*.md` in order:
 
 1. **Preflight** (`prompts/01-survey-repo.md` preflight) — detect Lovable fingerprints: `lovable-tagger` dep, `componentTagger()` in vite config, `.lovable/` dir, auto-gen header in `src/integrations/supabase/client.ts`. Stop if none match.
-2. **Parallel extraction** — run `01-survey-repo.md`, `02-mine-chat.md`, `03-extract-data-model.md`, `04-extract-business-logic.md`, `05-extract-ui.md`. Each writes `.scratch/*.json`.
+2. **Parallel extraction** — run `01-survey-repo.md`, `02-mine-chat.md`, `03-extract-data-model.md`, `04-extract-business-logic.md`, `05-extract-ui.md`, and `11-mine-teams-chat.md` *(only if `--teams-chat` provided)*. Each writes `.scratch/*.json`.
 3. **NFR elicitation** — `prompts/08-elicit-nfrs.md`. Audience, concurrency, data sensitivity, compliance, SLAs, perf, hosting, budget.
 4. **POC-vs-production review** — `prompts/10-poc-review.md`. Ask which POC shortcuts to keep vs adjust vs drop; auto-surface concerning patterns from extractions for per-item decisions.
 5. **Sizing** — complexity = `routes + tables + edge_fns + feature_areas`. ≤12 → single milestone; >12 → multiple.

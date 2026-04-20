@@ -25,10 +25,14 @@ For each of these inventory items, confirm it appears in at least one spec doc:
 | Requirement | `.planning/REQUIREMENTS.md R-NN` | exactly one phase in `.planning/ROADMAP.md` |
 | POC review item | `poc-review.json.review_items[]` | `spec/11-production-adjustments.md` + (if `adjust`) a tagged task in `.planning/phases/*/PLAN.md` or `.planning/BACKLOG.md` |
 | POC tradeoff | `poc-review.json.tradeoffs[]` | `spec/11-production-adjustments.md` + (if `adjust`) shaped into `spec/02-features.md` acceptance criteria or `spec/08-non-functional.md` |
+| Stakeholder intent | `teams-insights.stakeholder_intents[]` | `spec/02-features.md` (as F-NN or "Requested but not shipped") OR `spec/00-overview.md` top-3 outcomes |
+| Strategic decision | `teams-insights.strategic_decisions[]` | `spec/09-decisions.md` (prefixed `[Stakeholder]`) |
+| External resource | `teams-insights.external_resources[]` | `spec/06-integrations.md` "External knowledge resources" section |
+| Teams-raised risk | `teams-insights.risks_and_concerns[]` | `spec/08-non-functional.md` OR `spec/11-production-adjustments.md` OR action items in the report |
 
 ### 2. Evidence check
 Grep each `spec/*.md` for unsourced claims:
-- Every bullet or sentence stating a fact should contain `(chat: …)`, `(code: …)`, or `(nfr: …)`.
+- Every bullet or sentence stating a fact should contain `(chat: …)`, `(code: …)`, `(nfr: …)`, `(teams: …)`, `(slack: …)`, or `(email: …)`.
 - Exceptions: `spec/00-overview.md` first paragraph; section headers; Mermaid diagrams.
 
 ### 3. Stack-agnostic check
@@ -80,6 +84,9 @@ Check `nfrs.json` for `skipped_questions[]`. Each skipped item should appear in 
 | Requirements → Phases | 23 | 23 | — |
 | POC review items | 14 | 14 | — |
 | POC tradeoffs | 9 | 9 | — |
+| Stakeholder intents (teams) | 12 | 12 | — |
+| Strategic decisions (teams) | 6 | 6 | — |
+| External resources (teams) | 3 | 3 | — |
 
 **Coverage: 97.8%**
 

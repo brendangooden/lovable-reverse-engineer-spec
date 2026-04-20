@@ -5,6 +5,18 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-04-20
+
+### Added
+- `prompts/11-mine-teams-chat.md` — optional extractor for external chat transcripts (Teams, Slack, email). Runs in parallel with the other 5 extractors when `--teams-chat <path>` is provided. Filters multi-project content to only advisory/cross-cutting, then captures stakeholder intents, strategic decisions, cross-app context, external resources (SharePoint etc.), stakeholders, risks/concerns, timeline anchors, and unanswered questions.
+- New evidence citation formats: `(teams: YYYY-MM-DD HH:MM @Speaker)`, `(slack: …)`, `(email: …)` — accepted by the evidence-check step.
+- Synthesis now merges three signal sources: repo (what was built), Lovable chat (dev-level intent), external chat (stakeholder-level intent). Strategic ADRs get `[Stakeholder]` prefix. External knowledge resources land in `06-integrations.md`. Teams-raised risks cross-check NFRs.
+- Coverage matrix tracks stakeholder intents, strategic decisions, external resources, and teams-raised risks.
+
+### Changed
+- `SKILL.md` / `AGENTS.md` inputs table + orchestration step 2 list the new extractor.
+- README "Three signal sources" added to design principles.
+
 ## [0.2.0] — 2026-04-20
 
 ### Added

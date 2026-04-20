@@ -11,6 +11,7 @@ Turn a Lovable.dev project into documentation that another AI coding agent can r
 
 - `--repo <path>` — clone of the Lovable GitHub repo.
 - `--chat <path>` — export produced by [`loveable-chat-history-capture`](https://github.com/brendangooden/loveable-chat-history-capture) (contains `raw/*.json`, `edits/*.json`, `attachments/`, `timeline.md`, `index.json`).
+- `--teams-chat <path>` *(optional)* — path to a Teams/Slack/email transcript (`CHAT.md` or similar) where stakeholders discussed the project. Adds strategic, cross-app, and external context that's missing from Lovable chat and code.
 - `--out <path>` — where to write the spec (defaults to `<repo>/.reverse-engineered/`).
 
 If args missing, ask the user before proceeding. Never guess paths.
@@ -52,6 +53,7 @@ Execute these steps in order. Each `prompts/NN-*.md` file is a self-contained in
    - `prompts/03-extract-data-model.md` → `.scratch/data-model.json`
    - `prompts/04-extract-business-logic.md` → `.scratch/business-logic.json`
    - `prompts/05-extract-ui.md` → `.scratch/ui-inventory.json`
+   - `prompts/11-mine-teams-chat.md` → `.scratch/teams-insights.json` *(skip if `--teams-chat` not provided)*
 
 3. **NFR elicitation** — run `prompts/08-elicit-nfrs.md`. Ask the user for audience size, concurrency, data sensitivity, compliance regime (GDPR/HIPAA/SOC2/none), SLA targets, perf budgets, hosting constraints, budget ceiling. Record to `.scratch/nfrs.json`. Use AskUserQuestion in Claude Code; in AGENTS.md hosts use inline Q&A.
 
